@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #43a047 url('https://www.transparenttextures.com/patterns/dark-matter.png');
+    font-family: system-ui, Arial;
+}
+
+.banner {
+    width: 100%;
+    background: url('https://cms-assets.xboxservices.com/assets/65/15/6515e0be-8482-48bb-97f9-737010626408.jpg?n=Minecraft_Sneaky-Slider-1084_Tiny-Takeover_1600x675.jpg') center/cover;
+    border-bottom: 8px solid #373737;
+}
+
+.banner-overlay {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 60px;
+    text-align: center;
+    color: white;
+    font-family: "Press Start 2P", system-ui;
+}
+
+.container {
+    width: 95%;
+    max-width: 1100px;
+    margin: -30px auto 40px auto;
+}
+
+.mc-panel {
+    background-color: #C6C6C6;
+    border: 4px solid black;
+    box-shadow: inset -4px -4px 0px #555555, inset 4px 4px 0px #FFFFFF;
+    padding: 20px;
+    color: #3f3f3f;
+}
+
+nav { display: flex; gap: 5px; margin-bottom: 10px; 
+    font-family: "Press Start 2P", system-ui;
+}
+
+.tabs button {
+    background: #C6C6C6;
+    border: 3px solid black;
+    box-shadow: inset -3px -3px 0px #555555, inset 3px 3px 0px #FFFFFF;
+    padding: 10px 15px;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.tabs button:hover, .tabs a.mc-tab:hover {
+    background: #d1d1d1;
+    color: #000;
+}
+
+.tabs button:active, .tabs a.mc-tab:active {
+    box-shadow: inset 4px 4px 0px #555555;
+    transform: translateY(2px);
+}
+
+.main-layout { display: flex; gap: 20px; }
+#catalog { flex: 2; min-height: 500px; }
+#cart-box { flex: 1; }
+
+.item-card {
+    background: #8b8b8b;
+    border: 3px solid black;
+    box-shadow: inset -3px -3px 0px #555, inset 3px 3px 0px #dbdbdb;
+    margin-bottom: 15px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: white;
+}
+
+.item-card img { width: 64px; image-rendering: pixelated; }
+
+.item-card button {
+    background: #5d8a33;
+    border: 2px solid black;
+    color: white;
+    box-shadow: inset -2px -2px 0px #324d1a, inset 2px 2px 0px #8bc34a;
+    font-family: 'Minecraft', sans-serif;
+    cursor: pointer;
+}
+
+input {
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    box-sizing: border-box;
+    font-family: 'Minecraft', sans-serif;
+    background: #000;
+    color: #00ff00;
+    border: 2px solid #555;
+}
+
+#checkout-btn {
+    width: 100%;
+    padding: 15px;
+    background: #666;
+    color: white;
+    border: 3px solid black;
+    box-shadow: inset -3px -3px 0px #333, inset 3px 3px 0px #999;
+    font-family: 'Minecraft', sans-serif;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.villager-sprite {
+    width: 100px;
+    height: 150px;
+    background: url('https://minecraft.wiki/images/Villager_Base.png') no-repeat center/contain;
+    margin: 20px auto;
+}
+
+
+.tabs button, .tabs a.mc-tab {
+    background: #C6C6C6;
+    border: 4px solid black;
+    box-shadow: inset -4px -4px 0px #555555, inset 4px 4px 0px #FFFFFF;
+    padding: 10px 15px;
+    font-family: "Press Start 2P", sans-serif;
+    cursor: pointer;
+    text-decoration: none; 
+    color: #3f3f3f;
+    display: inline-block;
+    font-size: 13px;
+    line-height: 1.2;
+}
+

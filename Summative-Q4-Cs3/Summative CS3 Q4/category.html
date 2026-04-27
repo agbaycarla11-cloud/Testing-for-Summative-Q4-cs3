@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villager's Outpost</title>
+    
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="banner">
+    <div class="banner-overlay">
+        <h1>Villager's Outpost</h1>
+        <p>Hrmmm... Best trades in the Overworld!</p>
+    </div>
+</div>
+
+<div class="container">
+    <nav class="tabs">
+    <a href="index.html" class="mc-tab">Home</a>
+    <a href="About.html" class="mc-tab">About Company</a>
+    
+    <button onclick="showCategory('Food')">Food</button>
+    <button onclick="showCategory('Armor')">Armor</button>
+    <button onclick="showCategory('Rare')">Rare Items</button>
+    <button onclick="showCategory('Decor')">Home Decor</button>
+</nav>
+    <div class="main-layout">
+        <div id="catalog" class="mc-panel">
+
+            <div id="product-list" class="view" style="display:none;"></div>
+        </div>
+
+        <div id="cart-box" class="mc-panel cart-panel">
+            <h2 class="mc-font">Inventory</h2>
+            <ul id="cart-items"></ul>
+            <div class="total-section">
+                <hr>
+                <p>Total: <span id="cart-total">0</span> <img src="https://minecraft.wiki/images/Emerald_JE3_BE3.png" width="16" alt="E"></p>
+            </div>
+
+            <form action="http://52.74.133.173/cs3/checkout.php" method="GET">
+                <input type="text" name="cust_name" placeholder="Character Name" required>
+                <input type="text" name="cust_addr" placeholder="Village Coordinates" required>
+                <input type="email" name="cust_email" placeholder="Mailbird Address" required>
+                
+                <input type="hidden" id="cust_order" name="cust_order">
+                
+                <button type="submit" id="checkout-btn">Complete Trade</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <script>
+var products = {
+    Food: [
+        { name: "Cookie", price: 7, desc: "Pastry made of Cocoa beans", img: "images/cookie.png" },
+        { name: "Beef", price: 5, desc: "Dropped by Cows", img: "images/beef.png" },
+        { name: "Pork", price: 5, desc: "Restores 4 hunger", img: "images/pork.png" },
+        { name: "Chicken", price: 5, desc: "Cluck! Dropped by chicken", img: "images/chicken.png" },
+        { name: "Fish", price: 5, desc: "Caught from river depths", img: "images/fish.png" }
+    ],
+    Armor: [
+        { name: "Leather Gear", price: 20, desc: "Dyeable armor", img: "images/leatherarmor.png" },
+        { name: "Iron Plate", price: 40, desc: "Essential protection", img: "images/ironarmor.png" },
+        { name: "Gold Plate", price: 60, desc: "Pacifies Piglins", img: "images/goldarmor.png" },
+        { name: "Diamond Plate", price: 80, desc: "High-tier armor", img: "images/diamondarmor.png" },
+        { name: "Netherite", price: 100, desc: "Strongest equipment", img: "images/netheritearmor.png" }
+    ],
+    Rare: [
+        { name: "Beacon", price: 130, desc: "Provides status effects", img: "images/beacon.png" },
+        { name: "Dragon Egg", price: 300, desc: "Rare trophy", img: "images/dragonegg.png" },
+        { name: "Totem", price: 75, desc: "Prevents death", img: "images/totem.png" },
+        { name: "Mace", price: 150, desc: "High-damage weapon", img: "images/mace.png" },
+        { name: "Elytra", price: 200, desc: "Found in End Cities", img: "images/elytra.png" }
+    ],
+    Decor: [
+        { name: "Soul Lantern", price: 12, desc: "Calming blue light", img: "images/soullantern.png" },
+        { name: "Painting", price: 8, desc: "Random pixel art", img: "images/painting.png" },
+        { name: "Amethyst", price: 18, desc: "Purple crystal geode", img: "images/crystal.png" },
+        { name: "Armor Stand", price: 25, desc: "Wooden gear display", img: "images/stand.png" },
+        { name: "Bookshelf", price: 20, desc: "Block of knowledge", img: "images/bookshelf.png" }
+    ]
+};
+
+var cart = [];
+
+function showCategory(cat) {
+    var productList = document.getElementById('product-list');
+    
+    productList.style.display = "block";
+
+    productList.innerHTML = "<h2 class='mc-font'>" + cat + " Trades</h2>";
+    var items = products[cat];
+    
+    for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        var div = document.createElement('div');
+        div.className = "item-card";
+        div.innerHTML = "<img src='" + item.img + "' alt='" + item.name + "'>" +
+            "<div><strong>" + item.name + "</strong><br>" +
+            "<small>" + item.desc + "</small><br>" +
+            "<span>" + item.price + " Emeralds</span><br>" +
+            "<button onclick='addToCart(\"" + item.name + "\", " + item.price + ")'>Trade</button></div>";
+        productList.appendChild(div);
+    }
+}
+
+function addToCart(name, price) {
+
+    var item = { prod_name: name, prod_price: price };
+    cart.push(item);
+    updateCartDisplay();
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartDisplay();
+}
+
+function updateCartDisplay() {
+    var cartList = document.getElementById('cart-items');
+    var totalSpan = document.getElementById('cart-total');
+    var total = 0;
+
+    cartList.innerHTML = "";
+    for (var j = 0; j < cart.length; j++) {
+        var li = document.createElement('li');
+        li.style.listStyle = "none";
+        li.style.marginBottom = "5px";
+        li.innerHTML = cart[j].prod_name + " (" + cart[j].prod_price + ") " +
+            "<button onclick='removeFromCart(" + j + ")' style='background:#900; color:white; border:none; cursor:pointer;'>X</button>";
+        cartList.appendChild(li);
+        total += cart[j].prod_price;
+    }
+
+    totalSpan.innerText = total;
+
+    document.getElementById('cust_order').value = JSON.stringify(cart);
+}
+
+showCategory('Food');
+    </script>
+</body>
+</html>
